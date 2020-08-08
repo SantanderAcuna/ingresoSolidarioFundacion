@@ -12,15 +12,14 @@
                     <form action="{{route('selecion.store')}}" method="post">
                         @csrf
                         <input type="text" name="ced" id="ced">
-                        <button type="submit">Enviar</button>
-                       
-                    </form>                    
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+
+                    </form>
                 </div>
                 @include('partial.msg')
             </div>
         </div>
     </div>
 </div>
-
 
 @endsection

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Persona;
 use App\Seleccionado;
 use Illuminate\Http\Request;
 
@@ -20,13 +21,8 @@ class SeleccionadoController extends Controller
 
     public function consulta()
     {
-
-        
         $selec = Seleccionado::orderBy('id', 'desc')->get();
-       
         return $selec;
-
-        
     }
 
     /**
@@ -47,21 +43,20 @@ class SeleccionadoController extends Controller
      */
     public function store(Request $request)
     {
-
-    
         $documento = Seleccionado::where('identificacion', '=', $request->ced)->first();
 
         if ($documento) {
-            // consultar si ya estan actualizados los datos
-            
-            return redirect('/')->with('status', 'Por favor actualize sus datos');
+            $doc = Persona::findOrFail('hogar_final');
+
+            if ($doc) {
+                return redirect('/')->with('error', 'Usted no ha sido favorecido con el programa');
+            }
+            return redirect('/')->with('status', 'Por favor actualice sus datos');
         } else {
+
             return redirect('/')->with('error', 'Usted no ha sido favorecido con el programa');
         }
     }
-
-
-    
 
     /**
      * Display the specified resource.
